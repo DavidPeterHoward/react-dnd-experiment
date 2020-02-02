@@ -12,6 +12,4 @@ code {
     monospace;
 }
 
-.dragActive {
-  cursor: grabbing !important;
-}
+
