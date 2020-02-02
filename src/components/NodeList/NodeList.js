@@ -1,5 +1,5 @@
-import React, { Component, useState } from "react";
-import styled, { css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 import SingleNode from "../Node/Node";
 
 const NodeListContainer = styled.div`
@@ -7,7 +7,6 @@ const NodeListContainer = styled.div`
 `;
 
 const NodeList = props => {
-  // const [nodeList, setNodeList] = useState([initialNode]);
   const { AllNodes, scaleFactor } = props;
   return AllNodes.map(el => {
     return (

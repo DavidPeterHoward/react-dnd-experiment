@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import React, { useState } from "react";
+import styled from "styled-components";
 import NodeList from "../NodeList/NodeList";
 
 const initialNode = {
@@ -18,38 +18,6 @@ const initialNode = {
   }
 };
 
-const Container = styled.div`
-  /*   width: 100%;
-  height: 100%; */
-  /*   background-color: #ccc;
-  z-index: 0;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-  position: relative; */
-  /* transform: translate(132px, -93px) translate(-50%, -50%); */
-  border: 1px solid #d9d9d9;
-  margin: 10px 0 20px;
-  min-height: 400px;
-  width: 100%;
-  position: relative;
-`;
-const CenterTest = styled.div`
-  /*   width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-  margin: 0 auto;
-  border: 10px solid red; */
-`;
-const OuterContainer = styled.div`
-  /*   height: 100%;
-  width: 100%;
-  position: relative; */
-`;
-
 const Box = styled.div`
   min-height: 200vh;
   width: 200vw;
@@ -64,7 +32,6 @@ const Box = styled.div`
   &.dragActive {
     cursor: grabbing !important;
   }
-  /* transform: translate(-50%, -50%); */
 `;
 
 const OuterBox = styled.div`
@@ -75,7 +42,7 @@ const OuterBox = styled.div`
   overflow: hidden;
 `;
 const NodeContainer = () => {
-  // inital node state
+  // initial node state
   const [nodeList, setNodeList] = useState([initialNode]);
 
   // wheel state
@@ -115,7 +82,6 @@ const NodeContainer = () => {
       };
 
       setNodeList([...nodeList, NewNode]);
-      console.log(nodeList);
     }
   };
 
@@ -123,9 +89,7 @@ const NodeContainer = () => {
     const getContainer = document.getElementById("container");
     const { left, top } = extractContainerPosition(e);
     getContainer.addEventListener("wheel", event => {
-      // const getContainer = document.getElementById("container");
       event.preventDefault();
-      // const { left, top } = extractContainerPosition(e);
     });
 
     const delta = extractWheelPosition(e);
@@ -137,7 +101,6 @@ const NodeContainer = () => {
     var xLeft = NodeContainerLeft + left;
     var yTop = NodeContainerTop + top;
     console.log(delta);
-    // getContainer.style.transform = `scale(${delta})`;
     getContainer.style.transformOrigin = `${containerMousePositionTop}px ${containerMousePositionLeft}px`;
     getContainer.style.transform = `translate(${xLeft}px, ${yTop}px) translate(-50%, -50%) scale(${wheelScale})`;
   };
@@ -169,27 +132,18 @@ Drag Section
     getContainer.classList.add("dragDocumentActive");
   };
 
-  /*   const onMouseUp = e => {
-
-  }; */
-
   const onContainerDown = e => {
     e.stopPropagation();
     setIsContainerDragging(true);
     const getContainer = document.getElementById("container");
     getContainer.classList.add("dragDocumentActive");
     getContainer.setPointerCapture(e.pointerId);
-    console.trace(e.pointerId);
 
-    // We store the initial coordinates to be able to calculate the changes
-    // later on.
     extractContainerPosition(e);
   };
 
   const onContainerMove = e => {
-    console.log("moving");
     e.stopPropagation();
-    /*     console.log(isContainerDragging); */
     if (!isContainerDragging) {
       return;
     }
@@ -200,14 +154,9 @@ Drag Section
 
     setNodeContainerTop(NodeContainerTop + top);
     setNodeContainerLeft(NodeContainerLeft + left);
-    /*     console.dir(top);
-    console.dir(left); */
     var xLeft = NodeContainerLeft + left;
     var yTop = NodeContainerTop + top;
-    // getContainer.style.transform = `translate(${xLeft}px, ${yTop}px)`;
     getContainer.style.transform = `translate(${xLeft}px, ${yTop}px) translate(-50%, -50%) scale(${wheelScale})`;
-    /*     console.log(e.target.style.top);
-    console.log(NodeContainerLeft); */
   };
 
   const onContainerUp = e => {
@@ -217,25 +166,9 @@ Drag Section
     getContainer.classList.remove("dragDocumentActive");
     setIsContainerDragging(false);
 
-    /*     getContainer.style.left = "50%";
-    getContainer.style.top = "50%"; */
     const { left, top } = extractContainerPosition(e);
     getContainer.addEventListener("mouseup", event => {
-      //event.preventDefault();
       event.stopPropagation();
-      const { xPos, yPos } = GetTranslateOrigin;
-      const transX = NodeContainerLeft + left; /*  + NodeContainerLeftHolder */
-      const transY = NodeContainerTop + top; /*  + NodeContainerTopHolder */
-      /*       getContainer.style.transform = `translate(${transX}px, ${transY}px) translate(-50%, -50%) scale(${wheelScale})`;
-       */
-      /*       setNodeContainerLeft(0);
-      setNodeContainerTop(0);
-      setNodeContainerLeftHolder(transX);
-      setNodeContainerTopHolder(transY); */
-
-      // console.log(
-      //   (getContainer.style.transform = `translate(${NodeContainerLeft} + ${left} + "px", ${NodeContainerTop} + ${top} + "px")`)
-      // );
     });
   };
 
@@ -272,7 +205,6 @@ Drag Section
         onPointerCancel={e => onContainerUp(e)}
         onGotPointerCapture={e => onGotContainerCapture(e)}
         onLostPointerCapture={e => onContainerLostCapture(e)}
-        /*         on_drag={isContainerDragging} */
         onDoubleClick={e => CreateNode(e)}
         onWheel={e => HandleScroll(e)}
       >
